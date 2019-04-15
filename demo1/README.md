@@ -26,34 +26,45 @@
     
 然后开始写RestTemplate接口测试
 
-    @RunWith(SpringRunner.class)
-    @SpringBootTest
-    public class Demo1Test {
-    
-    	@Test
-    	public void testGet(){
-    		String url = "http://localhost:8080/demo/get";
-    		RestTemplate restTemplate = new RestTemplate();
-    		Map<String, Object> result = restTemplate.getForObject(url, Map.class);
-    		System.out.println(result);
-    		Assert.assertTrue(result != null);
-    	}
-    
-    	@Test
-    	public void testPost(){
-    		String url = "http://localhost:8080/demo/post";
-    		MultiValueMap<String, String> request = new LinkedMultiValueMap<>();
-    		request.add("name", "restTemplate");
-    		RestTemplate restTemplate = new RestTemplate();
-    		String result = restTemplate.postForObject(url, request, String.class);
-    		System.out.println(result);
-    		Assert.assertTrue(result != null);
-    	}
-    
-    }
+	@Test
+	public void testGet(){
+		String url = "http://localhost:8080/demo/get";
+		RestTemplate restTemplate = new RestTemplate();
+		String result = restTemplate.getForObject(url, String.class);
+		System.out.println(result);
+		Assert.assertTrue(result != null);
+	}
+
+	@Test
+	public void testPost(){
+		String url = "http://localhost:8080/demo/post";
+		MultiValueMap<String, String> request = new LinkedMultiValueMap<>();
+		request.add("name", "restTemplate");
+		RestTemplate restTemplate = new RestTemplate();
+		Map<String, Object> result = restTemplate.postForObject(url, request, Map.class);
+		
+		System.out.println(result);
+		Assert.assertTrue(result != null);
+	}
     
 本节，我们用 getForObject，postForObject，最简单的接口来入门 RestTemplate；
 
 如果你们需要拿到http状态码，可以使用 getForEntity、postForEntity 接口；
+
+用postForEntity举个例：
+
+    @Test
+    public void testPostEntity(){
+        String url = "http://localhost:8080/demo/post";
+        MultiValueMap<String, String> request = new LinkedMultiValueMap<>();
+        request.add("name", "restTemplate");
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+    
+        System.out.println("http code:" + response.getStatusCode());
+        System.out.println("http body:" + response.getBody());
+    
+        Assert.assertTrue(response.getStatusCode() == HttpStatus.OK);
+    }
 
 最后，你们会不会，总是 new RestTemplate 很不规范，下一节，我们来搭建一个规范的工程架子。
