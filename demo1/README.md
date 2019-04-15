@@ -24,7 +24,8 @@
     
     }
     
-然后开始写RestTemplate接口测试
+
+### 接口测试
 
 	@Test
 	public void testGet(){
