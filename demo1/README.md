@@ -47,7 +47,7 @@
 		Assert.assertTrue(result != null);
 	}
     
-本节，我们用 getForObject，postForObject，最简单的接口来入门 RestTemplate；
+我们用 getForObject，postForObject 最简单的接口来入门 RestTemplate；
 
 如果你们需要拿到http状态码，可以使用 getForEntity、postForEntity 接口；
 
